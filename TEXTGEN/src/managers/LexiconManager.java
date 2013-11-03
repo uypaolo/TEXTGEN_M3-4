@@ -150,7 +150,7 @@ public class LexiconManager {
 	
 	public LexiconList getLexiconList(String pos){
 		for(LexiconList list : languageLexicon){
-			if(list.getPOS().toLowerCase().equals(pos.toLowerCase()))
+			if(list.getPOS().equals(pos))
 				return list;
 		}
 		//System.out.println("HERE!!!!!!!!!!!!");
