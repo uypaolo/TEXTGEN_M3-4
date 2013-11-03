@@ -19,6 +19,7 @@ import org.jdom2.input.SAXBuilder;
 import org.jdom2.output.Format;
 import org.jdom2.output.XMLOutputter;
 
+import rule.RuleType;
 import lexicon.Lexicon;
 import lexicon.LexiconList;
 
@@ -234,12 +235,28 @@ public class LexiconManager {
 		newFolder.mkdir();
 		
 		ArrayList<PartOfSpeech> partsOfSpeech = ComponentManager.getInstance().getLeafPartsOfSpeech();
+		ArrayList<RuleType> ruleTypes = RuleManager.getInstance().getRuleTypes();
 		try{
 			for(PartOfSpeech pos: partsOfSpeech){
 				String xmlPath = newPath+"\\"+pos.getName()+".xml";
 				Element baseElement = createBasePOSElement(pos.getName());
 				XMLManager.getInstance().writeToXML(xmlPath, baseElement);
 			}
+			
+			String typeDirectory = newPath+"\\Rules\\";
+			File directory = new File(typeDirectory);
+			if(!directory.exists()){
+				directory.mkdirs();
+			}
+			
+			for(RuleType type: ruleTypes){
+				typeDirectory = newPath+"\\Rules\\"+type.getName()+"\\";
+				directory = new File(typeDirectory);
+				if(!directory.exists()){
+					directory.mkdirs();
+				}
+			}
+			
 			return true;
 		}catch(Exception e){
 			e.printStackTrace();
