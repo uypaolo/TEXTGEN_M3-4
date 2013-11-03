@@ -119,7 +119,6 @@ public class LexiconManager {
 			
 			//get mapping from each part of speech
 			HashMap<String, ArrayList<Lexicon>> currMap = lexiconList.getConceptToLexiconMap();
-		
 			//collate
 			for (Map.Entry<String, ArrayList<Lexicon>> entry : currMap.entrySet()){
 				ArrayList<Lexicon> listToAddTo = conceptToLexiconMap.get(entry.getKey());
@@ -151,9 +150,10 @@ public class LexiconManager {
 	
 	public LexiconList getLexiconList(String pos){
 		for(LexiconList list : languageLexicon){
-			if(list.getPOS().equals(pos))
+			if(list.getPOS().toLowerCase().equals(pos.toLowerCase()))
 				return list;
 		}
+		//System.out.println("HERE!!!!!!!!!!!!");
 		return null;
 	}
 	
@@ -256,6 +256,9 @@ public class LexiconManager {
 					directory.mkdirs();
 				}
 			}
+			
+			/*this.currSelectedLanguage = newLanguage;
+			refresh();*/
 			
 			return true;
 		}catch(Exception e){
