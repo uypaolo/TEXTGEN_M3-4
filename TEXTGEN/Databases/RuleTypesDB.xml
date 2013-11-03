@@ -1,0 +1,9 @@
+<db>
+	<type name = "Table Rules"/>
+	<type name = "Structure Rules"/>
+	<type name = "Spell-out Rules"/>
+	<type name = "Morphophonemic Rules"/>
+	<type name = "Form Selection Rules"/>
+	<type name = "Feature Copy Rules"/>
+	<type name = "Phrase Structure Rules"/>
+</db>
