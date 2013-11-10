@@ -61,10 +61,10 @@ public class Rule {
 	public void setOutput(ArrayList<Component> output) {
 		this.output = output;
 	}
-	String getName() {
+	public String getName() {
 		return name;
 	}
-	void setName(String name) {
+	public void setName(String name) {
 		this.name = name;
 	}
 	
@@ -79,7 +79,7 @@ public class Rule {
 			
 	}
 	
-	private boolean writeToXML(String filePath, Element rootElement){
+	public boolean writeToXML(String filePath, Element rootElement){
 		XMLOutputter xmlOutput = new XMLOutputter();
 		xmlOutput.setFormat(Format.getPrettyFormat());
 		try{
