@@ -1,7 +1,10 @@
 package rule;
 
+import java.io.File;
 import java.util.ArrayList;
+
 import org.jdom2.Element;
+
 import components.Component;
 
 public class Rule {
@@ -10,6 +13,14 @@ public class Rule {
 	private ArrayList<Component> input;
 	private ArrayList<Component> output;
 	private String name;
+	
+	public Rule(){
+		
+	}
+	
+	public Rule(File e){
+		
+	}
 	
 	public ArrayList<Component> getInput() {
 		return input;

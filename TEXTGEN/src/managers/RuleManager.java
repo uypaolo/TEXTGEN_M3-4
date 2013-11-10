@@ -4,12 +4,13 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.swing.tree.DefaultMutableTreeNode;
+
 import org.jdom2.Document;
 import org.jdom2.Element;
 import org.jdom2.input.SAXBuilder;
 
-import components.ComponentInfo;
-
+import rule.Rule;
 import rule.RuleType;
 
 public class RuleManager {
@@ -18,6 +19,7 @@ public class RuleManager {
 	
 	
 	private static RuleManager instance;
+	private static DefaultMutableTreeNode rules;
 	
 	public static RuleManager getInstance(){
 		if(instance == null)
@@ -46,7 +48,42 @@ public class RuleManager {
 		}catch(Exception e){e.printStackTrace();}
 	}
 	
+	public static DefaultMutableTreeNode getRules(File root){
+		if(rules == null){
+			rules = FileToRule(root);
+		}
+		
+		return rules;
+	}
+	
 	public ArrayList<RuleType> getRuleTypes(){
 		return ruleTypes;
 	}
+	
+	private static DefaultMutableTreeNode FileToRule(File root){
+		DefaultMutableTreeNode dir = new DefaultMutableTreeNode();
+		DefaultMutableTreeNode item;
+			
+		if(root.isDirectory()){
+			File[] files = root.listFiles();
+			
+			for(File file : files){	
+				if(root.isFile()){
+					item = new DefaultMutableTreeNode(new Rule(file));
+					dir.add(item);
+				}
+				else{
+					dir.add(FileToRule(file));
+				}
+			}
+		}
+		else if(root.isFile()){
+			item = new DefaultMutableTreeNode(new Rule(root));
+			dir.add(item);
+		}
+		
+		return dir;
+	}
+	
+	
 }
