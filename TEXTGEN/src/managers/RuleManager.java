@@ -61,7 +61,7 @@ public class RuleManager {
 	}
 	
 	private static DefaultMutableTreeNode FileToRule(File root){
-		DefaultMutableTreeNode dir = new DefaultMutableTreeNode();
+		DefaultMutableTreeNode dir = new DefaultMutableTreeNode(root.getName());
 		DefaultMutableTreeNode item;
 			
 		if(root.isDirectory()){
