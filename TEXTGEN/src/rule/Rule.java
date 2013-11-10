@@ -92,4 +92,8 @@ public class Rule {
 		return false;
 	}
 	
+	public String toString(){
+		return name;
+	}
+	
 }

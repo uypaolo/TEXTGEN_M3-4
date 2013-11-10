@@ -1,10 +1,17 @@
 package managers;
 
+import java.awt.Dimension;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.swing.JFrame;
+import javax.swing.JScrollPane;
+import javax.swing.JTree;
 import javax.swing.tree.DefaultMutableTreeNode;
+import javax.swing.tree.TreeSelectionModel;
+
+import net.miginfocom.swing.MigLayout;
 
 import org.jdom2.Document;
 import org.jdom2.Element;
@@ -13,24 +20,20 @@ import org.jdom2.input.SAXBuilder;
 import rule.Rule;
 import rule.RuleType;
 
-import components.Component;
-import components.Leaf;
-import components.Phrase;
-
 public class RuleManager {
 	
 	public static void main(String[] args ){
 		SAXBuilder builder = new SAXBuilder();
-		File file = new File("C:/Users/user/Downloads/Test/Rule_Format.xml");
+		File file = new File("C:/Users/user/Downloads/Test");
 		DefaultMutableTreeNode dmt = new DefaultMutableTreeNode();
 		String ruleName = "";
 	
 		try{
-			Document document = (Document) builder.build(file);
-			Element verseNode = document.getRootElement();
+			//Document document = (Document) builder.build(file);
+			//Element verseNode = document.getRootElement();
 			dmt = getRules(file);
 			
-			Rule r = (Rule)dmt.getUserObject();
+			/*Rule r = (Rule)dmt.getUserObject();
 			System.out.println();
 			System.out.println();
 			System.out.println(r.getName());
@@ -64,7 +67,17 @@ public class RuleManager {
 				System.out.println();
 			}
 			
-			r.writeToXML("C:/Users/user/Downloads/Test/TestSave.xml", verseNode);
+			r.writeToXML("C:/Users/user/Downloads/Test/TestSave.xml", verseNode);*/
+			
+			JTree tree = new JTree(dmt);
+			tree.getSelectionModel().setSelectionMode(TreeSelectionModel.SINGLE_TREE_SELECTION);
+			JFrame frame = new JFrame();
+			frame.setLayout(new MigLayout("", "[grow]", "[grow]"));
+			frame.add(new JScrollPane(tree), "grow, push");
+			frame.setSize(new Dimension(400, 300));
+			frame.setVisible(true);
+			frame.setResizable(true);
+			frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		}catch(Exception e){e.printStackTrace();}
 	}
 	
