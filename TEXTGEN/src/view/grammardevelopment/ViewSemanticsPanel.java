@@ -1,22 +1,30 @@
 package view.grammardevelopment;
 
 import java.awt.Dimension;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
+import java.io.File;
 import java.util.ArrayList;
 
 import javax.swing.BoxLayout;
+import javax.swing.JButton;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JSplitPane;
 import javax.swing.JTabbedPane;
+import javax.swing.JTextArea;
+import javax.swing.JTree;
+import javax.swing.tree.DefaultMutableTreeNode;
 
+import rule.RuleCreationWindow;
+import managers.LexiconManager;
+import managers.RuleManager;
 import net.miginfocom.swing.MigLayout;
-import rule.RuleViewPanel;
 import view.MainFrame;
 import view.grammardevelopment.editsemantics.CreationRightPanel;
-
 import components.Component;
 import components.InputXMLDocument;
-
 import controller.GrammarDevController;
 import controller.listener.grammardev.SelectComponentActionListener;
 import controller.listener.grammardev.toolbar.EditDocInfoButtonListener;
@@ -46,7 +54,7 @@ public class ViewSemanticsPanel extends JPanel{
 	private TextAreaWithScrollPane docInfoArea;
 	private TextAreaWithScrollPane infoArea;
 	private ArrayList<InputXMLDocumentPanel> xmlDocPanels;
-	private RuleViewPanel ruleView;
+	private JPanel ruleView;
 	
 		
 	private GrammarDevController grammarDevController;
@@ -91,12 +99,61 @@ public class ViewSemanticsPanel extends JPanel{
 		rightPanel.add(infoArea);
 		
 		int panelHeight = rightPanel.getPreferredSize().height;
+		System.out.println();
 		generatedArea.setPreferredSize(new Dimension(generatedArea.getPreferredSize().width, panelHeight/5));
 		docInfoArea.setPreferredSize(new Dimension(generatedArea.getPreferredSize().width, panelHeight/5));
 		infoArea.setPreferredSize(new Dimension(generatedArea.getPreferredSize().width, panelHeight*3/5));
 		
 		
 		return rightPanel;
+	}
+	
+	private JPanel createRuleView(){
+		JPanel ruleView = new JPanel();
+		JTree ruleTree;
+		DefaultMutableTreeNode tree;
+		JButton addButton;
+		JButton editButton;
+		JButton deleteButton;
+
+		JScrollPane scrollPaneTree;
+		JScrollPane scrollPaneText;
+		JTextArea textArea;
+		RuleManager ruleManager;
+		LexiconManager lexiconManager;
+		
+		lexiconManager = LexiconManager.getInstance();
+		ruleManager = RuleManager.getInstance();
+		
+		addButton = new JButton("Add Rule");
+		editButton = new JButton("Edit Rule");
+		deleteButton = new JButton("Delete");
+		
+		addButton.addActionListener(new ActionListener(){
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				// TODO Auto-generated method stub
+				new RuleCreationWindow();
+			}
+			
+		});
+		 
+		tree = ruleManager.getRules(new File(LexiconManager.ROOT_LANGUAGE_FOLDER+"/"+lexiconManager.getCurrSelectedLanguage()+"/Rules"));
+		ruleTree = new JTree(tree);
+		
+		scrollPaneTree = new JScrollPane(ruleTree);
+		
+		textArea = new JTextArea();
+		scrollPaneText = new JScrollPane(textArea);
+		
+		ruleView.setLayout(new MigLayout());
+		ruleView.add(scrollPaneTree, "wrap, pushx, growx, dock north");
+		ruleView.add(scrollPaneText, "wrap, pushx, growx, dock north");		
+		ruleView.add(addButton);
+		ruleView.add(editButton);
+		ruleView.add(deleteButton);
+		
+		return ruleView;
 	}
 	
 	//Initialize methods
@@ -115,8 +172,9 @@ public class ViewSemanticsPanel extends JPanel{
 	
 	private void initializeDisplay(int initialMode){
 		//right panels
-		ruleView = new RuleViewPanel();
+		
 		viewPanel = createRightViewPanel();
+		ruleView = createRuleView();
 		creationPanel = new CreationRightPanel();
 		tabbedPane = new JTabbedPane();
 	
@@ -127,7 +185,7 @@ public class ViewSemanticsPanel extends JPanel{
 		//Split Pane
 		if(initialMode == MODE_VIEW){
 			tabbedPane.add("Information", viewPanel);
-			tabbedPane.add("Rules", new RuleViewPanel());
+			tabbedPane.add("Rules", ruleView);
 			splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, display, tabbedPane);
 		}
 		else{
