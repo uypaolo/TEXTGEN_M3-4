@@ -22,7 +22,7 @@ import rule.RuleType;
 
 public class RuleManager {
 	
-	public static void main(String[] args ){
+	/*public static void main(String[] args ){
 		SAXBuilder builder = new SAXBuilder();
 		File file = new File("C:/Users/user/Downloads/Test");
 		DefaultMutableTreeNode dmt = new DefaultMutableTreeNode();
@@ -69,7 +69,7 @@ public class RuleManager {
 			
 			r.writeToXML("C:/Users/user/Downloads/Test/TestSave.xml", verseNode);*/
 			
-			JTree tree = new JTree(dmt);
+			/*JTree tree = new JTree(dmt);
 			tree.getSelectionModel().setSelectionMode(TreeSelectionModel.SINGLE_TREE_SELECTION);
 			JFrame frame = new JFrame();
 			frame.setLayout(new MigLayout("", "[grow]", "[grow]"));
@@ -79,10 +79,9 @@ public class RuleManager {
 			frame.setResizable(true);
 			frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		}catch(Exception e){e.printStackTrace();}
-	}
+	}*/
 	
 	private static final String RULE_TYPES_DB_FILE_PATH = "Databases\\RuleTypesDB.xml";
-	
 	
 	private static RuleManager instance;
 	private static DefaultMutableTreeNode rules;
@@ -116,7 +115,7 @@ public class RuleManager {
 	
 	public static DefaultMutableTreeNode getRules(File root){
 		if(rules == null){
-			rules = FileToRule(root);
+			rules = loadRules(root);
 		}
 		
 		return rules;
@@ -126,7 +125,7 @@ public class RuleManager {
 		return ruleTypes;
 	}
 	
-	private static DefaultMutableTreeNode FileToRule(File root){
+	private static DefaultMutableTreeNode loadRules(File root){
 		DefaultMutableTreeNode dir;
 		
 		DefaultMutableTreeNode item;
@@ -141,7 +140,7 @@ public class RuleManager {
 					dir.add(item);
 				}
 				else{
-					dir.add(FileToRule(file));
+					dir.add(loadRules(file));
 				}
 			}
 		}

@@ -1,35 +1,22 @@
 package view.grammardevelopment;
 
-import java.awt.BorderLayout;
-import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
-import java.awt.GridLayout;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.io.File;
 import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.LinkedHashMap;
-import java.util.Map.Entry;
 
 import javax.swing.BoxLayout;
-import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.JSplitPane;
-import javax.swing.TransferHandler;
+import javax.swing.JTabbedPane;
 
+import net.miginfocom.swing.MigLayout;
+import rule.RuleViewPanel;
 import view.MainFrame;
 import view.grammardevelopment.editsemantics.CreationRightPanel;
 
-import managers.SemanticsManager;
-
 import components.Component;
 import components.InputXMLDocument;
-import controller.CreateController;
+
 import controller.GrammarDevController;
 import controller.listener.grammardev.SelectComponentActionListener;
 import controller.listener.grammardev.toolbar.EditDocInfoButtonListener;
@@ -51,6 +38,7 @@ public class ViewSemanticsPanel extends JPanel{
 	//GUI Components
 	private ViewSemanticsPanelToolBar toolBar;
 	private JSplitPane splitPane;
+	private JTabbedPane tabbedPane;
 	private JPanel viewPanel;
 	private CreationRightPanel creationPanel;
 	private DisplayScreen display;
@@ -58,6 +46,8 @@ public class ViewSemanticsPanel extends JPanel{
 	private TextAreaWithScrollPane docInfoArea;
 	private TextAreaWithScrollPane infoArea;
 	private ArrayList<InputXMLDocumentPanel> xmlDocPanels;
+	private RuleViewPanel ruleView;
+	
 		
 	private GrammarDevController grammarDevController;
 	
@@ -125,16 +115,21 @@ public class ViewSemanticsPanel extends JPanel{
 	
 	private void initializeDisplay(int initialMode){
 		//right panels
+		ruleView = new RuleViewPanel();
 		viewPanel = createRightViewPanel();
 		creationPanel = new CreationRightPanel();
+		tabbedPane = new JTabbedPane();
 	
 		//LeftPanel
 		display = new DisplayScreen();
 		display.display(this.initialDocPanel); //displays the first
 					
 		//Split Pane
-		if(initialMode == MODE_VIEW)
-			splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, display, viewPanel);
+		if(initialMode == MODE_VIEW){
+			tabbedPane.add("Information", viewPanel);
+			tabbedPane.add("Rules", new RuleViewPanel());
+			splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, display, tabbedPane);
+		}
 		else{
 			splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, display, creationPanel);
 			setMode(MODE_EDIT);
