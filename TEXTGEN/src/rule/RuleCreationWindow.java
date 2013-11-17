@@ -15,6 +15,7 @@ import javax.swing.JTextField;
 
 import net.miginfocom.swing.MigLayout;
 import view.ruledevelopment.FeatureCopyPanel;
+import view.ruledevelopment.SpelloutPanel;
 
 public class RuleCreationWindow extends JFrame{
 	private ButtonGroup cbg;
@@ -22,6 +23,7 @@ public class RuleCreationWindow extends JFrame{
 	private JComboBox<String> syntacticCategory;
 	private JPanel creationGUI;
 	private JPanel mainArea;
+	private JPanel testGUI;
 	private JLabel ruleNameLabel;
 	private JLabel ruleTypeLabel;
 	private JLabel syntacticCategoryLabel;
@@ -41,6 +43,7 @@ public class RuleCreationWindow extends JFrame{
 		cbg = new ButtonGroup();
 		mainArea = new JPanel();
 		creationGUI = new JPanel();
+		testGUI = new JPanel();
 		
 		
 		ruleNameLabel = new JLabel("Rule Name");
@@ -61,9 +64,10 @@ public class RuleCreationWindow extends JFrame{
 				String selected = ((JComboBox)arg0.getSource()).getSelectedItem().toString();
 				if(selected.equals("Spell-out")){
 					//System.out.println("SPELLOUT!!!!!!!!!!!!!!!");
+					
 					Container parent = creationGUI.getParent();
 					parent.remove(creationGUI);
-					creationGUI = new FeatureCopyPanel();
+					creationGUI = new SpelloutPanel();
 					parent.add(creationGUI);
 					parent.repaint();
 					parent.revalidate();
@@ -113,6 +117,7 @@ public class RuleCreationWindow extends JFrame{
 		
 		add(mainArea);
 	}
+	
 	
 	public void setFrame(){
 		this.setTitle("Rule Creation");

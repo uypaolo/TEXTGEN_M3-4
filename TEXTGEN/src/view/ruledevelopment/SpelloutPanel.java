@@ -15,43 +15,61 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+import net.miginfocom.swing.MigLayout;
+
 public class SpelloutPanel extends JPanel{
 
 	private JPanel panel1;
 	private JPanel panel2;
+	private JLabel spelloutValueslabel;
 	private JComboBox<String> spelloutValues;
 	private String spelloutValueTitle;
 	
 	public SpelloutPanel(){
-		this.setBorder(BorderFactory.createTitledBorder("Spellout Rules"));
 		panel1 = new JPanel();
-		panel1.setLayout(new BoxLayout(panel1, BoxLayout.PAGE_AXIS));
+		this.setBorder(BorderFactory.createTitledBorder("Spellout Rules"));
+		this.setLayout(new MigLayout());
+		
+		spelloutValueslabel = new JLabel("Spellout Values");
 		
 		spelloutValues = new JComboBox<String>();
-		spelloutValues.setAlignmentX(java.awt.Component.LEFT_ALIGNMENT);
-		spelloutValues.setMinimumSize(new Dimension(200,20));
-		spelloutValues.setMaximumSize(new Dimension(200,20));
+		initializeSpellOutValues();
+		intializeComp();
+
+		panel1.add(spelloutValueslabel);
+		panel1.add(spelloutValues);
 		
-		this.setBorder(BorderFactory.createTitledBorder(spelloutValueTitle));
-		panel2 = new JPanel();
-		panel2.setLayout(new BoxLayout(panel2, BoxLayout.PAGE_AXIS));
+		panel1.setVisible(true);
+		spelloutValues.setVisible(true);
+		
 	}
 	
 	public void intializeComp(){
 		spelloutValues.setEnabled(true);
 	}
 	
-	private String getSelectedFeatInCmb(){
+	private String getSelectedSpelloutInCmb(){
 		return spelloutValues.getSelectedItem().toString();
 	}
 	
-	public void initializeSpellOutValues(){
+	private void gotoSelectedSpellout(){
+		String selected = getSelectedSpelloutInCmb();
+		
+		switch(selected){
+			case "Simple":
+			case "Table":
+			case "Morphophonemic":
+			case "Form Selection":
+			case "Phrase Builder":
+		}
+	}
+	
+	private void initializeSpellOutValues(){
 		spelloutValues.addItem("Simple");
 		spelloutValues.addItem("Table");
 		spelloutValues.addItem("Morphophonemic");
 		spelloutValues.addItem("Form Selection");
 		spelloutValues.addItem("Phrase Builder");
 	}
-	
 	
 }
