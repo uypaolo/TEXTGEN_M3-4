@@ -1,6 +1,9 @@
 package rule;
 
 import java.awt.Color;
+import java.awt.Container;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 
 import javax.swing.ButtonGroup;
 import javax.swing.JCheckBox;
@@ -11,6 +14,7 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 import net.miginfocom.swing.MigLayout;
+import view.ruledevelopment.FeatureCopyPanel;
 
 public class RuleCreationWindow extends JFrame{
 	private ButtonGroup cbg;
@@ -25,6 +29,7 @@ public class RuleCreationWindow extends JFrame{
 	private JCheckBox forAll;
 	private JCheckBox specific;
 	private JCheckBox global;
+	public static String sc;
 	
 	public RuleCreationWindow(){
 		setLayout(new MigLayout());
@@ -47,20 +52,44 @@ public class RuleCreationWindow extends JFrame{
 		ruleType.addItem("Spell-out");
 		ruleType.addItem("Feature Copy");
 		
+		ruleType.setSelectedIndex(0);
+		
+		ruleType.addItemListener(new ItemListener(){
+			@Override
+			public void itemStateChanged(ItemEvent arg0) {
+				// TODO Auto-generated method stub
+				String selected = ((JComboBox)arg0.getSource()).getSelectedItem().toString();
+				if(selected.equals("Spell-out")){
+					//System.out.println("SPELLOUT!!!!!!!!!!!!!!!");
+					Container parent = creationGUI.getParent();
+					parent.remove(creationGUI);
+					creationGUI = new FeatureCopyPanel();
+					parent.add(creationGUI);
+					parent.repaint();
+					parent.revalidate();
+					
+				}
+			}
+			
+		});
+		
 		syntacticCategory = new JComboBox<String>();
-		syntacticCategory.addItem("Noun");
-		syntacticCategory.addItem("Verb");
-		syntacticCategory.addItem("Adjective");
-		syntacticCategory.addItem("Adverb");
-		syntacticCategory.addItem("Adposition");
-		syntacticCategory.addItem("Conjunction");
-		syntacticCategory.addItem("Phrasal");
+		syntacticCategory.addItem("N");
+		syntacticCategory.addItem("V");
+		syntacticCategory.addItem("Adj");
+		syntacticCategory.addItem("Adv");
+		syntacticCategory.addItem("Adp");
+		syntacticCategory.addItem("Conj");
 		syntacticCategory.addItem("Particle");
-		syntacticCategory.addItem("Noun Phrase");
-		syntacticCategory.addItem("Verb Phrase");
-		syntacticCategory.addItem("Adjective Phrase");
-		syntacticCategory.addItem("Adverb Phrase");
-		syntacticCategory.addItem("Clause");
+		syntacticCategory.addItem("NP");
+		syntacticCategory.addItem("VP");
+		syntacticCategory.addItem("AdjP");
+		syntacticCategory.addItem("AdvP");
+		syntacticCategory.addItem("Cl");
+		
+		sc = syntacticCategory.getSelectedItem().toString();
+		
+		syntacticCategory.setSelectedIndex(0);
 		
 		ruleName = new JTextField();
 		forAll = new JCheckBox("On/Off for document", false);
