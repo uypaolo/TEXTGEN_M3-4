@@ -17,7 +17,7 @@ import net.miginfocom.swing.MigLayout;
 import view.ruledevelopment.FeatureCopyPanel;
 import view.ruledevelopment.SpelloutPanel;
 
-public class RuleCreationWindow extends JFrame{
+public class RuleCreationWindow extends JPanel{
 	private ButtonGroup cbg;
 	private JComboBox<String> ruleType;
 	private JComboBox<String> syntacticCategory;
@@ -34,9 +34,12 @@ public class RuleCreationWindow extends JFrame{
 	public static String sc;
 	
 	public RuleCreationWindow(){
-		setLayout(new MigLayout());
+		//setLayout(new MigLayout());
+		//setFrame();
+		setSize(750, 545);
+		setVisible(true);
 		initComponents();
-		setFrame();
+		setLayout(null);
 	}
 	
 	public void initComponents(){
@@ -46,8 +49,11 @@ public class RuleCreationWindow extends JFrame{
 		testGUI = new JPanel();
 		
 		
+		
 		ruleNameLabel = new JLabel("Rule Name");
+		ruleNameLabel.setBounds(5, 5, 100, 20);
 		ruleTypeLabel = new JLabel("Rule Type");
+		ruleTypeLabel.setBounds(5, 25, 100, 20);
 		syntacticCategoryLabel = new JLabel("Symantic Category");
 		
 		ruleType = new JComboBox<String>();
@@ -96,6 +102,7 @@ public class RuleCreationWindow extends JFrame{
 		syntacticCategory.setSelectedIndex(0);
 		
 		ruleName = new JTextField();
+		ruleName.setBounds(105, 5, 100, 20);
 		forAll = new JCheckBox("On/Off for document", false);
 		specific = new JCheckBox("On/Off for selected", false);
 		global = new JCheckBox("On/Off", true);
@@ -104,7 +111,7 @@ public class RuleCreationWindow extends JFrame{
 		cbg.add(specific);
 		cbg.add(global);
 		
-		mainArea.add(ruleTypeLabel);
+		/*mainArea.add(ruleTypeLabel);
 		mainArea.add(ruleType);
 		mainArea.add(syntacticCategoryLabel);
 		mainArea.add(syntacticCategory);
@@ -114,18 +121,34 @@ public class RuleCreationWindow extends JFrame{
 		mainArea.add(specific);
 		mainArea.add(global);
 		mainArea.add(creationGUI);
+		mainArea.setVisible(true);*/
 		
-		add(mainArea);
+		add(ruleTypeLabel);
+		add(ruleType);
+		add(syntacticCategoryLabel);
+		add(syntacticCategory);
+		add(ruleNameLabel);
+		add(ruleName);
+		add(forAll);
+		add(specific);
+		add(global);
+		add(creationGUI);
+		
+		
+		//add(ruleNameLabel);
+		//add(mainArea);
+		//this.setLayout(null);
 	}
 	
 	
-	public void setFrame(){
+	/*public void setFrame(){
 		this.setTitle("Rule Creation");
 		this.setSize(750, 545);//640
+		this.setLayout(null);
 		this.setResizable(true);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.setVisible(true);
 		this.setBackground(Color.DARK_GRAY);
 		this.pack();
-	}
+	}*/
 }

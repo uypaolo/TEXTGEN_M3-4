@@ -1,5 +1,6 @@
 package view.grammardevelopment;
 
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -9,6 +10,7 @@ import java.util.ArrayList;
 
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
+import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JSplitPane;
@@ -133,7 +135,21 @@ public class ViewSemanticsPanel extends JPanel{
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				// TODO Auto-generated method stub
-				new RuleCreationWindow();
+				JFrame rulewindow = new JFrame("Rule Creation");
+				RuleCreationWindow rl = new RuleCreationWindow();
+				//rulewindow.setTitle("Rule Creation");
+				//rulewindow.getContentPane().add(rl);
+				rulewindow.add(rl);
+				rulewindow.setSize(750, 545);
+				//rulewindow.setBounds(0, 0, 750, 545);
+				//rulewindow.setResizable(false);
+				//rulewindow.setSize(750, 545);//640
+				//rulewindow.setLayout(null);
+				//rulewindow.setResizable(false);
+				//rulewindow.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+				rulewindow.setVisible(true);
+				//rulewindow.setBackground(Color.DARK_GRAY);
+				//rulewindow.pack();
 			}
 			
 		});
