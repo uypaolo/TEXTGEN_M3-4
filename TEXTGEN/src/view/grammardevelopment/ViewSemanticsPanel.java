@@ -253,7 +253,9 @@ public class ViewSemanticsPanel extends JPanel{
 			case MODE_VIEW:
 				display.setMode(DisplayScreen.MODE_INITIALIZE);
 				setDocumentInfo();
-				splitPane.setRightComponent(viewPanel);
+				tabbedPane.add("Information", viewPanel);
+				tabbedPane.add("Rules", ruleView);
+				splitPane.setRightComponent(tabbedPane);
 				splitPane.setDividerLocation(0.58);
 				display.display(this.initialDocPanel);
 				generatedArea.setTextAreaContent(display.getDisplaySentence());
