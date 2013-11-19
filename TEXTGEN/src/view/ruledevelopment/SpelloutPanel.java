@@ -41,6 +41,7 @@ public class SpelloutPanel extends JPanel{
 		
 		panel1.setVisible(true);
 		spelloutValues.setVisible(true);
+	
 		
 	}
 	

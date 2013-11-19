@@ -17,7 +17,7 @@ import net.miginfocom.swing.MigLayout;
 import view.ruledevelopment.FeatureCopyPanel;
 import view.ruledevelopment.SpelloutPanel;
 
-public class RuleCreationWindow extends JPanel{
+public class RuleCreationWindow extends JFrame{
 	private ButtonGroup cbg;
 	private JComboBox<String> ruleType;
 	private JComboBox<String> syntacticCategory;
@@ -34,12 +34,13 @@ public class RuleCreationWindow extends JPanel{
 	public static String sc;
 	
 	public RuleCreationWindow(){
-		//setLayout(new MigLayout());
-		//setFrame();
-		setSize(750, 545);
-		setVisible(true);
+		setLayout(new MigLayout());
 		initComponents();
-		setLayout(null);
+		setFrame();
+		//setSize(750, 545);
+		//setVisible(true);
+		
+		//setLayout(null);
 	}
 	
 	public void initComponents(){
@@ -73,7 +74,7 @@ public class RuleCreationWindow extends JPanel{
 					
 					Container parent = creationGUI.getParent();
 					parent.remove(creationGUI);
-					creationGUI = new SpelloutPanel();
+					creationGUI = new FeatureCopyPanel();
 					parent.add(creationGUI);
 					parent.repaint();
 					parent.revalidate();
@@ -111,7 +112,7 @@ public class RuleCreationWindow extends JPanel{
 		cbg.add(specific);
 		cbg.add(global);
 		
-		/*mainArea.add(ruleTypeLabel);
+		mainArea.add(ruleTypeLabel);
 		mainArea.add(ruleType);
 		mainArea.add(syntacticCategoryLabel);
 		mainArea.add(syntacticCategory);
@@ -121,9 +122,9 @@ public class RuleCreationWindow extends JPanel{
 		mainArea.add(specific);
 		mainArea.add(global);
 		mainArea.add(creationGUI);
-		mainArea.setVisible(true);*/
+		//mainArea.setVisible(true);
 		
-		add(ruleTypeLabel);
+		/*add(ruleTypeLabel);
 		add(ruleType);
 		add(syntacticCategoryLabel);
 		add(syntacticCategory);
@@ -132,23 +133,23 @@ public class RuleCreationWindow extends JPanel{
 		add(forAll);
 		add(specific);
 		add(global);
-		add(creationGUI);
+		add(creationGUI);*/
 		
 		
 		//add(ruleNameLabel);
-		//add(mainArea);
+		add(mainArea);
 		//this.setLayout(null);
 	}
 	
 	
-	/*public void setFrame(){
+	public void setFrame(){
 		this.setTitle("Rule Creation");
 		this.setSize(750, 545);//640
-		this.setLayout(null);
+		//this.setLayout(null);
 		this.setResizable(true);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.setVisible(true);
 		this.setBackground(Color.DARK_GRAY);
 		this.pack();
-	}*/
+	}
 }

@@ -133,9 +133,21 @@ public class RuleManager {
 		if(root.isDirectory()){
 			dir = new DefaultMutableTreeNode(root.getName());
 			File[] files = root.listFiles();
+			ArrayList<File> fileList = new ArrayList<File>();
+			int insert = 0;
 			
-			for(File file : files){	
-				if(root.isFile()){
+			for(File file : files){
+				if(file.isDirectory()){
+					fileList.add(insert, file);
+					insert++;
+				}
+				else{
+					fileList.add(file);
+				}
+			}
+			
+			for(File file : fileList){	
+				if(file.isFile()){
 					item = new DefaultMutableTreeNode(new Rule(file));
 					dir.add(item);
 				}

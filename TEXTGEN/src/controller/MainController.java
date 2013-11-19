@@ -23,6 +23,15 @@ public class MainController {
 	
 	private MainFrame mainFrame;
 	
+	private static MainController instance;
+	
+	public static MainController getInstance(){
+		if(instance == null){
+			instance = new MainController();
+		}
+		return instance;
+	}
+	
 	public MainController(){
 		grammarDevController = new GrammarDevController(this);
 		ontologyController = new OntologyController();

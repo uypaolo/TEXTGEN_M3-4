@@ -1,0 +1,23 @@
+<rule name = "Sample Rule">
+<input>
+    <component name="NP">
+      <features>
+        <feature name="Sequence" value="First Coordinate" />
+        <feature name="Semantic Role" value="Source" />
+      </features>
+      <component name="N" concept="girl" sense="A" lexicon="babae" />
+    </component>
+</input>
+<output>
+    <component name="NP">
+      <features>
+        <feature name="Sequence" value="First Coordinate" />
+        <feature name="Semantic Role" value="Source" />
+      </features>
+	  <component name="VP">
+      <component name="V" concept="sit" sense="A" lexicon="upo" />
+	  </component>
+      <component name="N" concept="girl" sense="A" lexicon="babae" />
+    </component>
+</output>
+</rule>

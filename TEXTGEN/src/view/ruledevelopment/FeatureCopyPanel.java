@@ -2,6 +2,8 @@ package view.ruledevelopment;
 
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 
@@ -11,11 +13,19 @@ import javax.swing.JComboBox;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
+import javax.swing.TransferHandler;
 
 import managers.FeatureManager;
 import rule.RuleCreationWindow;
 import view.grammardevelopment.DisplayScreen;
 import view.grammardevelopment.editsemantics.CreationRightPanel;
+import controller.CreateController;
+import controller.GrammarDevController;
+import controller.MainController;
+import controller.listener.grammardev.editsemantics.DeleteComponentBtnListener;
+import controller.listener.grammardev.editsemantics.FeaturePaletteCmbValuesItemListener;
+import controller.listener.grammardev.editsemantics.FeaturePaletteResetBtnListener;
+import controller.listener.grammardev.editsemantics.LeafEditPaletteBtnListener;
 import features.DBFeatureValues;
 
 public class FeatureCopyPanel extends JPanel{
@@ -37,14 +47,37 @@ public class FeatureCopyPanel extends JPanel{
 	private JTextField comment;
 	private LinkedHashMap<String, ArrayList<DBFeatureValues>> featureList;
 	private ArrayList<DBFeatureValues> selectedFeature;
+	private CreateController createController;
 	
 	public FeatureCopyPanel(){
+		GrammarDevController gd = new GrammarDevController(new MainController());
 		creationPanel = new CreationRightPanel();
+		creationPanel.addDeleteBtnListener(new DeleteComponentBtnListener(gd));
+		creationPanel.addLeafEditBtnListener(new LeafEditPaletteBtnListener(gd, creationPanel));
+		creationPanel.addSaveFeatureListener(new FeaturePaletteCmbValuesItemListener(gd, creationPanel));
+		creationPanel.addResetFeatureBtnListener(new FeaturePaletteResetBtnListener(creationPanel));
+		creationPanel.addSelectFeatureComboBoxListener(new ItemListener(){
+			public void itemStateChanged(ItemEvent e) {
+				creationPanel.refreshFeaturesDisplay();
+			}
+		});				
+		creationPanel.addCompPaletteDragListener(new MouseAdapter(){
+            public void mousePressed(MouseEvent e){
+                JButton button = (JButton)e.getSource();
+                TransferHandler handle = button.getTransferHandler();
+                handle.exportAsDrag(button, e, TransferHandler.COPY);
+            }
+        });
+		//createController = new CreateController(new GrammarDevController(new MainController()), creationPanel);
+		okButton = new JButton("Ok");
+		cancelButton = new JButton("Cancel");
 		copyPanel = createCopyPanel();
 		inputScreen = new DisplayScreen();
 		this.add(inputScreen);
 		this.add(copyPanel);
 		this.add(creationPanel);
+		this.add(okButton);
+		this.add(cancelButton);
 		
 	}
 	

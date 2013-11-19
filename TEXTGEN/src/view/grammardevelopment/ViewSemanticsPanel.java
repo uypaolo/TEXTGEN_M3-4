@@ -1,10 +1,11 @@
 package view.grammardevelopment;
 
-import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.io.File;
 import java.util.ArrayList;
 
@@ -17,16 +18,20 @@ import javax.swing.JSplitPane;
 import javax.swing.JTabbedPane;
 import javax.swing.JTextArea;
 import javax.swing.JTree;
+import javax.swing.SwingUtilities;
 import javax.swing.tree.DefaultMutableTreeNode;
 
-import rule.RuleCreationWindow;
 import managers.LexiconManager;
 import managers.RuleManager;
 import net.miginfocom.swing.MigLayout;
+import rule.RuleCreationWindow;
 import view.MainFrame;
 import view.grammardevelopment.editsemantics.CreationRightPanel;
+import view.ruledevelopment.PopUpMenu;
+
 import components.Component;
 import components.InputXMLDocument;
+
 import controller.GrammarDevController;
 import controller.listener.grammardev.SelectComponentActionListener;
 import controller.listener.grammardev.toolbar.EditDocInfoButtonListener;
@@ -139,15 +144,15 @@ public class ViewSemanticsPanel extends JPanel{
 				RuleCreationWindow rl = new RuleCreationWindow();
 				//rulewindow.setTitle("Rule Creation");
 				//rulewindow.getContentPane().add(rl);
-				rulewindow.add(rl);
-				rulewindow.setSize(750, 545);
+				//rulewindow.add(rl);
+				//rulewindow.setSize(750, 545);
 				//rulewindow.setBounds(0, 0, 750, 545);
 				//rulewindow.setResizable(false);
 				//rulewindow.setSize(750, 545);//640
 				//rulewindow.setLayout(null);
 				//rulewindow.setResizable(false);
 				//rulewindow.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-				rulewindow.setVisible(true);
+				//rulewindow.setVisible(true);
 				//rulewindow.setBackground(Color.DARK_GRAY);
 				//rulewindow.pack();
 			}
@@ -156,6 +161,48 @@ public class ViewSemanticsPanel extends JPanel{
 		 
 		tree = ruleManager.getRules(new File(LexiconManager.ROOT_LANGUAGE_FOLDER+"/"+lexiconManager.getCurrSelectedLanguage()+"/Rules"));
 		ruleTree = new JTree(tree);
+		
+		ruleTree.addMouseListener(new MouseListener(){
+
+			@Override
+			public void mouseClicked(MouseEvent arg0) {
+				if(SwingUtilities.isRightMouseButton(arg0)){
+					JTree src = (JTree)arg0.getSource();
+					DefaultMutableTreeNode node = (DefaultMutableTreeNode)(src.getLastSelectedPathComponent());
+					if(node != null){
+						PopUpMenu popup = new PopUpMenu();
+						popup.setSelectedNode(node);
+						popup.show(arg0.getComponent(), arg0.getX(), arg0.getY());
+					}
+				}
+				
+			}
+
+			@Override
+			public void mouseEntered(MouseEvent arg0) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void mouseExited(MouseEvent arg0) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void mousePressed(MouseEvent arg0) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void mouseReleased(MouseEvent arg0) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+		});
 		
 		scrollPaneTree = new JScrollPane(ruleTree);
 		
